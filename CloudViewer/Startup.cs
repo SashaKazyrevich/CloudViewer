@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
+using System.Text;
+using NLog.Extensions.Logging;
 
 namespace CloudViewer
 {
@@ -17,6 +21,7 @@ namespace CloudViewer
         }
 
         public IConfiguration Configuration { get; }
+        public object CodePagesEncodingProvider { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,7 +41,7 @@ namespace CloudViewer
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
